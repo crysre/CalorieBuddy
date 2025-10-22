@@ -30,11 +30,22 @@ const Tracker = new Schema({
 
 })
 
+const FoodLibrary = new Schema({
+    name: String,
+    calories: {type:Number, default:0},
+    protein: {type:Number, default:0},
+    carbs: {type:Number, default:0},
+    fat: {type:Number, default:0},
+    serving: String
+
+})
+
 
 
 
 export const TrackerModel = model("Tracker", Tracker);
 export const UserModel = model("User", User);
+export const FoodLibraryMoodel = model("FoodLibrary", FoodLibrary);
 
 
 

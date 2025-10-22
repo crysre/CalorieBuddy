@@ -42,3 +42,32 @@ export const handleFoodPost = async(req, res)=>{
 
  
 }
+
+export const handleFoodDelete = async(req, res)=>{
+
+    const {foodId} = req.body;
+    const date = new Date().toISOString().split("T")[0];
+    const userId = req.userId;
+
+
+        const tracker = await TrackerModel.findOne({
+            userId,
+            date
+        })
+
+        if(!tracker){
+            return res.status(400).json({
+                message: "Entry not found"
+            })
+        }
+
+        tracker.foods = tracker.foods.filter(food=> food._id.toString() !== foodId);
+
+        await tracker.save()
+
+        res.json({
+            message:"Deleted item"
+        })
+   
+
+}

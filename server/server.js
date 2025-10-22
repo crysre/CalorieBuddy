@@ -1,9 +1,10 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { handleFoodPost } from "./controllers/FoodController.js";
+import { handleFoodDelete, handleFoodPost } from "./controllers/FoodController.js";
 import { handelLogin, handelSignup } from "./controllers/UserController.js";
 import { auth } from "./middleware/auth.js";
+import { foodLibraryPost } from "./controllers/FoodLibraryController.js";
 
 
 
@@ -20,6 +21,9 @@ app.post("/login", handelLogin)
 
 
 app.post("/food",auth, handleFoodPost)
+app.delete("/food", auth, handleFoodDelete)
+
+app.post("/foodLibrary", foodLibraryPost )
 
 
 async function main(){
