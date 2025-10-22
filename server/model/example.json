@@ -1,0 +1,79 @@
+{
+  "userId": "64f1b2c5e8f3a2b1d5e6f789",
+  "date": "2025-10-22",
+  "totalNutrients": {
+    "calories": 500,
+    "protein": 30,
+    "carbs": 60,
+    "fat": 20
+  },
+  "foods": [
+    {
+      "name": "Chicken Breast",
+      "quantity": 200,
+      "nutrients": {
+        "calories": 330,
+        "protein": 40,
+        "carbs": 0,
+        "fat": 7
+      }
+    },
+    {
+      "name": "Rice",
+      "quantity": 150,
+      "nutrients": {
+        "calories": 170,
+        "protein": 3,
+        "carbs": 38,
+        "fat": 0.5
+      }
+    }
+  ]
+}
+
+
+    try{
+        const {userId,name, quantity, foods, nutrients} = req.body;
+
+    if(!userId){
+        return res.status(400).json({message: "Missing required field"});
+    }
+
+    const today = new Date()
+
+    let tracker = await TrackerModel.findOne({userId, date:today});
+
+    if(!tracker){
+           tracker = await TrackerModel.create({
+            userId, 
+            date:today,
+            foods:[],
+            nutrients: {calories:0 ,protein:0 ,carbs:0 ,fat:0}
+    })
+
+    }
+
+    tracker.foods.push({
+        name,
+        quantity,
+        nutrients
+    });
+
+    tracker.totalNutrients.protein += nutrients.protein || 0;
+    tracker.totalNutrients.carbs += nutrients.carbs || 0;
+    tracker.totalNutrients.calories += nutrients.calories || 0;
+    tracker.totalNutrients.fat += nutrients.fat || 0;
+
+    await tracker.save();
+
+    return res.status(201).json({
+        message: "Food added successfully",
+        tracker
+    });
+    }catch(e){
+        console.log(e);
+        res.status(500).json({message:"Internal server error"});
+        
+    }
+
+
