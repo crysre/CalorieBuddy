@@ -1,19 +1,19 @@
-import { Flame, Target } from "lucide-react"
+import { BicepsFlexed, Droplets, Flame, Target, Wheat } from "lucide-react"
 import { Card } from "./Card"
 
-function InfoCard(){
-    return <Card className={"p-4"} >
+function InfoCard({icon:Icon, color, name}){
+    return <Card className={" flex flex-col gap-5 w-full p-4"} >
         <div className="flex items-center gap-1" >
-                <Target className="h-5" stroke="#fe9833" />
-                <span className=" text-xs text-[#afae9c]" >Daily Progress</span>
+                <Icon className="h-5" stroke={color} />
+                <span className=" text-xs text-[#afae9c]" >{name}</span>
             </div>
-            <span>3.0 g</span>
+            <span className="text-2xl" >27.0 g</span>
     </Card>
 }
 
 export const DailyProgress = ()=>{
     
-    return <Card className="p-5 w-120 flex flex-col gap-4">
+    return <Card className=" h-90 p-5 w-full md:w-[69%] flex flex-col gap-4">
             <div className="flex items-center gap-4" >
                 <Target className="h-10" stroke="#fe9833" />
                 <span className=" text-2xl font-bold text-[#f4f1ce]" >Daily Progress</span>
@@ -26,7 +26,7 @@ export const DailyProgress = ()=>{
                 
             </div>
             
-            <div className=" w-110 h-3 rounded-full bg-[#984c00]" >
+            <div className=" w-full h-3 rounded-full bg-[#984c00]" >
                     <div className="bg-[#fe9833] h-full rounded-full w-[20%] " >
                         
                     </div>
@@ -35,13 +35,13 @@ export const DailyProgress = ()=>{
                 <span className="font-bold text-md text-[#f4f1ce]" >Macronutrients</span>
 
     
-                    <div className="flex gap-5" >
-                        <InfoCard/>
-                        <InfoCard/>
-                        <InfoCard/>
+                    <div className="flex h-full gap-5" >
+                        <InfoCard icon={BicepsFlexed} color="#3a82f7" name="Protein" />
+                        <InfoCard icon={Wheat} color="#eab209" name="Carbs" />
+                        <InfoCard icon={Droplets} color="#ee4445" name="Fat" />
                     </div>
 
-            
-           
+                
+        
         </Card>
 }
