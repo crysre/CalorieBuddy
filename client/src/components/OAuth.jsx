@@ -19,6 +19,7 @@ export const OAuth = ()=>{
             const data = res.data;
              console.log("Login successful:", data);
              localStorage.setItem("user", JSON.stringify(data.user));
+             localStorage.setItem("token", JSON.stringify(data.token))
              navigate("/");
             
         } catch (err) {
