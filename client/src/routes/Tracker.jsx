@@ -7,7 +7,7 @@ import { TodaysLog } from "../components/TodaysLog";
 export const Tracker = ()=>{
 
 
-    return <div className="flex flex-col flex-wrap md:flex-row gap-5" >
+    return <div className="flex md:justify-between flex-col flex-wrap md:flex-row" >
         
       
             <MealLogger/>

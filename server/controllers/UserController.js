@@ -2,8 +2,48 @@ import {email, z} from "zod";
 import { UserModel } from "../model/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
 
 
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+
+
+
+
+
+
+
+export const handelOAuth = async(req, res)=>{
+    const {token} = req.body;
+
+     try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const {email, name, picture, sub} = payload;
+
+    const appToken = jwt.sign(
+        {email, name, picture}, process.env.SECRET,
+        {expiresIn: "1h"}
+    );
+
+    res.json({
+      message: "Login successful",
+      user: { email, name, picture },
+      token: appToken,
+    });
+
+
+}catch(e){
+    console.log(e);
+    res.status(401).json({ message: "Invalid Google token" })
+}
+
+}
 
 export const handelLogin = async(req, res)=>{
     const requiredBody = z.object({

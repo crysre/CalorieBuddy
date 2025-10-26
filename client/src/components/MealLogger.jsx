@@ -20,7 +20,7 @@ export const MealLogger = ()=>{
         { name: 'Chicken Curry (1 cup) - 300 kcal', code: 'PRS' }
     ];
 
-    return <Card className=" p-5 w-full md:w-[28%] flex flex-col gap-4">
+    return <Card className=" p-5 w-fullmd:mr-5 md:w-[28%] flex flex-col gap-4">
             <div className="flex items-center gap-4" >
                 <UtensilsCrossed className="h-10" stroke="#fe9833" />
                 <span className=" text-2xl font-bold text-[#f4f1ce]" >Log Your Meal</span>
