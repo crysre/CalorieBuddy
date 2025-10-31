@@ -1,11 +1,15 @@
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router";
-import axios from "axios";
+import { instance, logOut } from "../api/axios";
+
+
+
 
 
 export const OAuth = ()=>{
 
     function handleLogout(){
+        logOut()
         googleLogout()
     }
 
@@ -15,11 +19,13 @@ export const OAuth = ()=>{
         const token = credentialResponse.credential;
 
         try{
-            const res = await axios.post("http://localhost:3000/oauth", {token} )
+            const res = await instance.post("/oauth", {token} )
             const data = res.data;
              console.log("Login successful:", data);
              localStorage.setItem("user", JSON.stringify(data.user));
-             localStorage.setItem("token", JSON.stringify(data.token))
+             localStorage.setItem("token", data.token)
+             instance.defaults.headers.common["token"] = data.token;
+
              navigate("/");
             
         } catch (err) {

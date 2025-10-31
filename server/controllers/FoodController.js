@@ -1,10 +1,29 @@
 import { TrackerModel } from "../model/db.js";
 
+
+export const handleGetFood = async(req, res)=>{
+    const userId = req.userId;
+    const date = new Date().toISOString().split("T")[0];
+
+    const tracker = await TrackerModel.find({
+        userId
+    })
+
+    res.json({
+        tracker
+    })
+
+}
+
 export const handleFoodPost = async(req, res)=>{
 
     const { foods} = req.body;
 
+    console.log(foods, "I'm foods");
+    
+
     const userId = req.userId;
+    
    
     const date = new Date().toISOString().split("T")[0];
 
@@ -33,7 +52,7 @@ export const handleFoodPost = async(req, res)=>{
 
     tracker.foods.push(...foods)
 
-    tracker.save()
+    await tracker.save()
 
     res.json({
         message: "Entry Made"
@@ -46,13 +65,15 @@ export const handleFoodPost = async(req, res)=>{
 export const handleFoodDelete = async(req, res)=>{
 
     const {foodId} = req.body;
+    console.log(foodId);
+    
     const date = new Date().toISOString().split("T")[0];
     const userId = req.userId;
 
 
         const tracker = await TrackerModel.findOne({
             userId,
-            date
+            // date
         })
 
         if(!tracker){

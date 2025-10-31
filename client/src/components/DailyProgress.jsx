@@ -1,5 +1,7 @@
 import { BicepsFlexed, Droplets, Flame, Target, Wheat } from "lucide-react"
 import { Card } from "./Card"
+import { FoodStore } from "../store/foodStores"
+import { useEffect } from "react"
 
 function InfoCard({icon:Icon, color, name}){
     return <Card className={" flex flex-col gap-5 w-full p-4"} >
@@ -12,6 +14,27 @@ function InfoCard({icon:Icon, color, name}){
 }
 
 export const DailyProgress = ()=>{
+
+    const store = FoodStore()
+    const {foods} = store;
+
+    const calorieGoal= 2000;
+    let totals = 0;
+    const progressPercent = Math.min((totals.calories / calorieGoal) * 100, 100)
+
+    useEffect(()=>{
+         totals = foods?.reduce(
+        (acc, food) => {
+            acc.calories += food.nutrients?.calories || 0
+            acc.protein += food.nutrients?.protein || 0
+            acc.carbs += food.nutrients?.carbs || 0
+            acc.fat += food.nutrients?.fat || 0
+            return acc
+        },
+        { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    ) || { calories: 0, protein: 0, carbs: 0, fat: 0 }
+
+    },[foods])
     
     return <Card className=" h-90 p-5 w-full md:w-[69%] flex flex-col gap-4">
             <div className="flex items-center gap-4" >
@@ -27,7 +50,7 @@ export const DailyProgress = ()=>{
             </div>
             
             <div className=" w-full h-3 rounded-full bg-[#984c00]" >
-                    <div className="bg-[#fe9833] h-full rounded-full w-[20%] " >
+                    <div style={{ width: `${progressPercent}%` }} className={`bg-[#fe9833] h-full rounded-full `} >
                         
                     </div>
                 </div>

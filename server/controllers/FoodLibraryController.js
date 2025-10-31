@@ -19,4 +19,16 @@ export const foodLibraryPost = (req, res)=>{
     }
 }
 
+export const foodLibraryGet = async(req, res)=>{
+    try{
+        const foods = await FoodLibraryMoodel.find({})
+        res.json({
+            foods
+        })
+
+    }catch(err){
+        console.log("error fetching data");
+        
+    }
+}
 

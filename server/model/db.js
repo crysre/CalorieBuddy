@@ -4,7 +4,7 @@ const User = new Schema({
     email:{type:String, unique:true, lowercase: true, required:true},
     firstName: String,
     lastName: String,
-    password: {type: String, required: true},
+    password: {type: String},
     
 })
 
@@ -19,6 +19,7 @@ const Nutrients = new Schema ({
 const Food = new Schema({
     name: {type:String, required:true},
     quantity: {type:Number, default:1},
+    serving: String,
     nutrients: Nutrients
 })
 

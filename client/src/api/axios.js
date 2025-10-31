@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const token = localStorage.getItem("token")
+const port = import.meta.env.VITE_API_URL;
+const token = localStorage.getItem("token");
 
 export const isToken = ()=>{
     if(token){
@@ -14,4 +15,10 @@ export const logOut = ()=>{
     localStorage.setItem("token", "")
 }
 
-const instance = axios.cre
+export const instance = axios.create({
+    baseURL:`${port}`
+})
+
+if(token){
+    instance.defaults.headers.common["token"] = token;
+}

@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { FoodLibraryStore } from '../store/foodStores';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -20,6 +21,16 @@ const rows = [
 ];
 
 export default function BasicTable() {
+
+
+      const foodLibraryStore= FoodLibraryStore()
+      // if(foodLibraryStore){
+      //   foodLibraryStore.map((food)=>{
+      //     rows.push(food.name, food.calories, food.protein,food.carbs, food.fat,food.serving,   )
+      //   })
+      // }
+
+
   return (
 
     
@@ -42,7 +53,7 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody >
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -58,7 +69,31 @@ export default function BasicTable() {
               <TableCell align="Center">{row.carbs}</TableCell>
               
             </TableRow>
-          ))}
+          ))} */}
+
+          {
+            foodLibraryStore?.foods?(
+              foodLibraryStore.foods.map((food)=>{
+                return <TableRow
+              key={food.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {food.name}
+              </TableCell>
+              <TableCell align="center">{food.calories}</TableCell>
+              <TableCell align="right">{food.protein}</TableCell>
+              <TableCell align="Center">{food.carbs}</TableCell>
+              <TableCell align="center">{food.fat}</TableCell>
+              <TableCell align="center">{food.fat}</TableCell>
+              <TableCell align="center">{food.carbs}</TableCell>
+              
+            </TableRow>
+                  
+                
+              })
+            ):(<div>Loading...</div>)
+          }
         </TableBody>
       </Table>
     </TableContainer>

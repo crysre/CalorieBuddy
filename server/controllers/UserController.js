@@ -1,4 +1,4 @@
-import {email, z} from "zod";
+import { z} from "zod";
 import { UserModel } from "../model/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -20,15 +20,26 @@ export const handelOAuth = async(req, res)=>{
      try {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: process.env.GOOGLE_CLIENT_ID,               //const token = jwt.sign({id:user._id}, process.env.SECRET)
     });
 
     const payload = ticket.getPayload();
     const {email, name, picture, sub} = payload;
 
+    let user = await UserModel.findOne({email})
+
+    if(!user){
+        user = await UserModel.create({
+            email,
+            firstName: name.split(" ")[0] || name,
+            lastName: name.split(" ")[1] || "",
+            
+        })
+    }
+
+
     const appToken = jwt.sign(
-        {email, name, picture}, process.env.SECRET,
-        {expiresIn: "1h"}
+        {id:user._id}, process.env.SECRET
     );
 
     res.json({
@@ -53,10 +64,8 @@ export const handelLogin = async(req, res)=>{
     const parsedData = requiredBody.safeParse(req.body)
 
     if(!parsedData.success){
-        res.status(404).json({
-        message: "invalid credentials"    
-        })
-    }
+    return res.status(404).json({ message: "invalid credentials" });
+}
 
     
     const {email, password} = parsedData.data;
@@ -110,7 +119,7 @@ export const handelSignup = async(req, res)=>{
     
 
     try{
-        UserModel.create({
+        await UserModel.create({
             email,
             firstName,
             lastName,

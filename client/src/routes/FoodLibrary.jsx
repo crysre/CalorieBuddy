@@ -1,8 +1,25 @@
 import { BookOpenText, CirclePlus } from "lucide-react"
 import { Card } from "../components/Card"
 import BasicTable from "../components/Table"
+import { useEffect } from "react"
+import { FoodLibraryStore } from "../store/foodStores"
 
 export const FoodLibrary = ()=>{
+
+    const foodLibraryStore= FoodLibraryStore()
+
+    useEffect(()=>{
+        async function fetchFoodLibrary() {
+            await foodLibraryStore.fetchFoods()
+            
+        }
+        fetchFoodLibrary()
+    },[])
+
+    useEffect(()=>{
+        console.log(foodLibraryStore.foods, "food library is working");
+        
+    })
 
 
 
