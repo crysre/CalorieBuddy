@@ -26,7 +26,6 @@ const Food = new Schema({
 const Tracker = new Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     date: {type: String, required:true, unique:false},
-    // totalNutrients: Nutrients,
     foods: [Food]
 
 })

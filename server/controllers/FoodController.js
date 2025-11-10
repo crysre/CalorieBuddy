@@ -6,8 +6,14 @@ export const handleGetFood = async(req, res)=>{
     const date = new Date().toISOString().split("T")[0];
 
     const tracker = await TrackerModel.find({
-        userId
+        userId,
+        date
     })
+
+    console.log(tracker);
+    console.log(date);
+    
+    
 
     res.json({
         tracker
@@ -73,7 +79,7 @@ export const handleFoodDelete = async(req, res)=>{
 
         const tracker = await TrackerModel.findOne({
             userId,
-            // date
+            date
         })
 
         if(!tracker){

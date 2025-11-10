@@ -4,6 +4,7 @@ import { instance } from "../api/axios";
 
 export const FoodStore = create((set, get)=>({
     foods:null,
+    weeklyCalories:[],
     fetchFoods:async()=>{
         try{
             const res = await instance.get("/food")
@@ -69,6 +70,36 @@ deleteMealLogger: async (foodId)=>{
     }catch(e){
         console.log(e);        
     }
+},
+
+getTotalNutrients: () =>{
+  const {foods} = get();
+
+  if (!foods || !Array.isArray(foods) || foods.length === 0) {
+    return { calories: 0, protein: 0, carbs: 0, fat: 0 };
+  }
+    let totalNutrients = {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+    };
+    foods.forEach((item) => {
+        totalNutrients.calories += item.nutrients.calories * item.quantity;
+        totalNutrients.protein += item.nutrients.protein * item.quantity;
+        totalNutrients.carbs += item.nutrients.carbs * item.quantity;
+        totalNutrients.fat += item.nutrients.fat * item.quantity;
+    });
+    return totalNutrients;
+},
+getWeeklyMeal: async ()=>{
+  const date = new Date().toISOString().split("T")[0];
+  for(let i = 0; i < 7; i++){
+    let splittedDate = date.split("-")
+    console.log(splittedDate);
+    
+  }
+
 }
 
 

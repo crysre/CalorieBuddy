@@ -1,8 +1,18 @@
 import { Utensils } from "../assets/utensils"
 import {Link} from "react-router-dom"
+import { userStore } from "../store/userStores"
+import { useEffect } from "react";
 
 
 export const Navbar = ()=>{
+
+    const userStores = userStore();
+    const {checkToken, logOutUser} = userStores;
+
+    useEffect(()=>{
+        checkToken()
+    },[])
+
     return <nav className=" sticky top-0 z-50 backdrop-blur-lg border-b border-neutral-800/70 "  >
         <div className=" container py-4 px-4 mx-auto relative lg:text-sm ">
            <div className="flex justify-center md:justify-between items-center" >
@@ -37,7 +47,11 @@ export const Navbar = ()=>{
                 </div>
 
                 <div className="hidden md:flex justify-center items-center space-x-12" >
-                    <Link to={"/auth"} ><button className="bg-linear-to-r from-[#FE9833] to-[#884401] text-[#000000] py-2 px-3 rounded-md" >Login</button></Link>
+                    { userStores.isTokenValue?
+                    <Link to={"/"} ><button onClick={()=>{logOutUser()}} className="bg-linear-to-r from-[#FE9833] to-[#884401] text-[#000000] py-2 px-3 rounded-md" >Logout</button></Link>
+                    :<Link to={"/auth"} ><button  className="bg-linear-to-r from-[#FE9833] to-[#884401] text-[#000000] py-2 px-3 rounded-md" >Login</button></Link>
+                    }
+
                 </div>
 
 

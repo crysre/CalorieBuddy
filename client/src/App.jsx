@@ -3,6 +3,8 @@ import {Routes, Route} from "react-router-dom"
 import { Tracker } from "./routes/Tracker"
 import { FoodLibrary } from "./routes/FoodLibrary"
 import { Auth } from "./routes/Auth"
+import { Example } from "./routes/Example"
+import { Progress } from "./routes/Progress"
 
 function App() {
 
@@ -14,6 +16,9 @@ function App() {
       <Route path="/" element={<Tracker/>} />
       <Route path="/foodlibrary" element={<FoodLibrary/>} />
       <Route path="/auth" element={<Auth/>} />
+      <Route path="/progress" element={<Progress/>} />
+
+      <Route path="/example" element={<Example/>} />
     </Routes>
     </div>
 

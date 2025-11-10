@@ -12,7 +12,6 @@ export const isToken = ()=>{
 }
 
 export const logOut = ()=>{
-    localStorage.setItem("token", "")
 }
 
 export const instance = axios.create({

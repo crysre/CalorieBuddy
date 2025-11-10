@@ -46,9 +46,8 @@ export default function BasicTable() {
             <TableCell>Name</TableCell>
             <TableCell align="center">Calories&nbsp;(kcal)</TableCell>
             <TableCell align="center">Protein&nbsp;(g) </TableCell>
-            <TableCell align="center">Carbs&nbsp;(g)</TableCell>
+            <TableCell align="left">Carbs&nbsp;(g)</TableCell>
             <TableCell align="center">Fat&nbsp;(g)</TableCell>
-            <TableCell align="left">Serving Size</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -82,11 +81,10 @@ export default function BasicTable() {
                 {food.name}
               </TableCell>
               <TableCell align="center">{food.calories}</TableCell>
-              <TableCell align="right">{food.protein}</TableCell>
+              <TableCell align="center">{food.protein}</TableCell>
               <TableCell align="Center">{food.carbs}</TableCell>
               <TableCell align="center">{food.fat}</TableCell>
-              <TableCell align="center">{food.fat}</TableCell>
-              <TableCell align="center">{food.carbs}</TableCell>
+              <TableCell align="right">{food.carbs}</TableCell>
               
             </TableRow>
                   

@@ -1,6 +1,7 @@
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router";
-import { instance, logOut } from "../api/axios";
+import { instance } from "../api/axios";
+import { userStore } from "../store/userStores";
 
 
 
@@ -8,8 +9,10 @@ import { instance, logOut } from "../api/axios";
 
 export const OAuth = ()=>{
 
+    const userStores = userStore();
+    const {logInUser} = userStores;
+
     function handleLogout(){
-        logOut()
         googleLogout()
     }
 
@@ -25,7 +28,7 @@ export const OAuth = ()=>{
              localStorage.setItem("user", JSON.stringify(data.user));
              localStorage.setItem("token", data.token)
              instance.defaults.headers.common["token"] = data.token;
-
+             logInUser()
              navigate("/");
             
         } catch (err) {
