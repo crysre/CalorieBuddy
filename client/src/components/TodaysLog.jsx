@@ -20,25 +20,25 @@ export const TodaysLog = ()=>{
             deleteMealLogger(id)
             
         }
-        return <Card className=" p-4 w-full" >
-            <span className="text-[#f4f1ce]" >{name}</span>
+        return <div className="border rounded-lg  border-neutral-700/80 backdrop-blur-lg bg-[#8FABD4]! p-4 w-full" >
+            <span className="" >{name}</span>
             <div className="flex justify-between" >
-                <span className="text-[rgb(175,174,156)]" >{serving} .Qty</span>
-                <Trash2 onClick={() => deleteItem(id)} stroke="rgb(175,174,156)" className="h-5 hover:stroke-[#7f1d1d] " />
+                <span className="" >{serving} .Qty</span>
+                <Trash2 onClick={() => deleteItem(id)} stroke="#000000" className="h-5 hover:stroke-[#ff0000] " />
 
             </div>
 
-            <span className="text-[#ff9933]" >{calories * serving}  kcal</span>
+            <span className="" >{calories * serving}  kcal</span>
 
-        </Card>
+        </div>
     }
 
 return <Card className="  h-110 mb-10 md:mt-8 py-5 px-5 w-full flex flex-col gap-4" >
          <div className="flex items-center gap-4" >
-                <CalendarDays className="h-10" stroke="#fe9833" />
-                <span className=" text-2xl font-bold text-[#f4f1ce]" >Today's Log</span>
+                <CalendarDays className="h-10" stroke="#8FABD4" />
+                <span className=" text-2xl font-bold " >Today's Log</span>
             </div>
-            <span className="text-xs text-[#afae9c] " >Friday, October 24, 2025</span>
+            <span className="text-xs " >Friday, October 24, 2025</span>
 
             <div className="w-full overflow-auto" >
 

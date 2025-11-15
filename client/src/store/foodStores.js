@@ -106,7 +106,7 @@ getWeeklyMeal: async ()=>{
 
 }))
 
-export const FoodLibraryStore = create((set)=>({
+export const FoodLibraryStore = create((set, get)=>({
     foods:null,
     fetchFoods:async()=>{
         try{
@@ -120,6 +120,48 @@ export const FoodLibraryStore = create((set)=>({
             console.log(e);
             
         }
+    },
+    foodBoxStatus:false,
+    setAddFoodBoxStatus: ()=>{
+      set((state)=>({
+        foodBoxStatus: !state.foodBoxStatus
+      }))
+    },
+    addFoodForm: {},
+    updateaddFoodForm:(key, value)=>{
+        set((state)=>({
+            addFoodForm:{
+                ...state.addFoodForm,
+                [key]:value
+            }
+        }))
+    },
+    addFoodLibrary: async()=>{
+      try{
+        const form = get().addFoodForm;
+        const name = form.name;
+        if(!name){
+          console.log("No item added");
+          return
+        }
+        const foodData = {
+          name: name,
+          calories: form.calories,
+          protein: form.protein,
+          carbs: form.carbs,
+          fat: form.fat
+        };
+        const res = await instance.post("/foodlibrary", foodData)
+        console.log(res, "Foodlibrary posted");
+
+        await get().fetchFoods();
+        set({addFoodForm:{}})
+        
+      }catch(e){
+        console.log(e, "error while posting foodlibrary");
+        
+      }
+
     }
 
 }))
